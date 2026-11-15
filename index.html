@@ -1,0 +1,198 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Last Key To Knowledge</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- MÀN HÌNH MENU -->
+    <section id="menu" class="screen">
+        <div class="menu-panel">
+            <p class="eyebrow">AN EDUCATIONAL ESCAPE ROOM</p>
+            <h1>THE LAST KEY<br>TO KNOWLEDGE</h1>
+            <p class="subtitle">Hành trình giải mã tri thức</p>
+
+            <button onclick="startGame()">START GAME</button>
+            <button class="secondary" onclick="showRules()">HOW TO PLAY</button>
+        </div>
+    </section>
+
+    <!-- MÀN HÌNH LUẬT CHƠI -->
+    <section id="rules" class="screen hidden">
+        <div class="panel rules-panel">
+            <h2>HƯỚNG DẪN TRÒ CHƠI</h2>
+            <p class="welcome">Chào mừng đến với The Last Key To Knowledge!</p>
+
+            <div class="rule-item">
+                <strong>01</strong>
+                <p>Khám phá và lựa chọn một trong bốn ổ khóa nhỏ.</p>
+            </div>
+
+            <div class="rule-item">
+                <strong>02</strong>
+                <p>Giải câu đố tương ứng để mở khóa.</p>
+            </div>
+
+            <div class="rule-item">
+                <strong>03</strong>
+                <p>Mỗi ổ khóa được mở sẽ giúp bạn thu thập một chữ cái.</p>
+            </div>
+
+            <div class="rule-item">
+                <strong>04</strong>
+                <p>Thu thập đủ bốn chữ cái và sắp xếp thành mật mã cuối cùng.</p>
+            </div>
+
+            <div class="rule-item">
+                <strong>05</strong>
+                <p>Mỗi ổ khóa có tối đa ba lượt sai. Hết lượt sẽ phải chơi lại từ đầu.</p>
+            </div>
+
+            <div class="rule-item">
+                <strong>06</strong>
+                <p>Nhập đúng mật mã để mở ổ khóa lớn và hoàn thành trò chơi!</p>
+            </div>
+
+            <button onclick="backToMenu()">QUAY LẠI</button>
+        </div>
+    </section>
+
+    <!-- MÀN HÌNH GAME -->
+    <section id="game" class="screen hidden">
+        <div class="game-container">
+
+            <header class="game-header">
+                <div>
+                    <p class="eyebrow">EDUCATIONAL ESCAPE ROOM</p>
+                    <h1>THE LAST KEY</h1>
+                </div>
+                <button class="small-button" onclick="backToMenu()">MENU</button>
+            </header>
+
+            <div class="game-intro">
+                Hãy mở bốn ổ khóa nhỏ để tìm ra mật mã cuối cùng.
+            </div>
+
+            <!-- BỐN Ổ KHÓA NHỎ -->
+            <div class="locks-grid">
+                <button class="lock-card" id="lock-1" onclick="openLock(1)">
+                    <span class="lock-icon">🔒</span>
+                    <strong>Ổ KHÓA 01</strong>
+                    <span class="lock-status" id="status-1">Chưa mở</span>
+                    <span class="lock-attempts" id="attempts-1">3 lượt sai</span>
+                </button>
+
+                <button class="lock-card" id="lock-2" onclick="openLock(2)">
+                    <span class="lock-icon">🔒</span>
+                    <strong>Ổ KHÓA 02</strong>
+                    <span class="lock-status" id="status-2">Chưa mở</span>
+                    <span class="lock-attempts" id="attempts-2">3 lượt sai</span>
+                </button>
+
+                <button class="lock-card" id="lock-3" onclick="openLock(3)">
+                    <span class="lock-icon">🔒</span>
+                    <strong>Ổ KHÓA 03</strong>
+                    <span class="lock-status" id="status-3">Chưa mở</span>
+                    <span class="lock-attempts" id="attempts-3">3 lượt sai</span>
+                </button>
+
+                <button class="lock-card" id="lock-4" onclick="openLock(4)">
+                    <span class="lock-icon">🔒</span>
+                    <strong>Ổ KHÓA 04</strong>
+                    <span class="lock-status" id="status-4">Chưa mở</span>
+                    <span class="lock-attempts" id="attempts-4">3 lượt sai</span>
+                </button>
+            </div>
+
+            <!-- CÁC CHỮ CÁI ĐÃ THU THẬP -->
+            <div class="collected-panel">
+                <h3>NHỮNG CHỮ CÁI ĐÃ THU THẬP</h3>
+                <div id="collected-letters" class="letter-list">
+                    <span class="empty-letter">?</span>
+                    <span class="empty-letter">?</span>
+                    <span class="empty-letter">?</span>
+                    <span class="empty-letter">?</span>
+                </div>
+            </div>
+
+            <!-- Ổ KHÓA LỚN -->
+            <div class="final-lock-panel">
+                <h2>THE FINAL LOCK</h2>
+                <p>Hãy sắp xếp bốn chữ cái thành một từ có nghĩa.</p>
+
+                <div id="final-clue" class="clue">
+                    Hãy mở các ổ khóa nhỏ để nhận gợi ý.
+                </div>
+
+                <div class="password-form">
+                    <input
+                        type="text"
+                        id="password-input"
+                        maxlength="4"
+                        placeholder="NHẬP MẬT MÃ"
+                        autocomplete="off"
+                        disabled
+                    >
+                    <button id="password-button" onclick="checkPassword()" disabled>
+                        UNLOCK
+                    </button>
+                </div>
+
+                <p id="password-message" class="message"></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- BẢNG CÂU HỎI -->
+    <div id="question-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span id="question-lock-name">Ổ KHÓA 01</span>
+                <button class="close-button" onclick="closeQuestion()">✕</button>
+            </div>
+
+            <div class="question-progress">
+                <span id="question-number">CÂU 1/3</span>
+                <span id="question-attempts">3 lượt sai còn lại</span>
+            </div>
+
+            <h2 id="question-text">Nội dung câu hỏi</h2>
+
+            <div id="answer-options" class="answer-options"></div>
+
+            <p id="question-feedback" class="message"></p>
+        </div>
+    </div>
+
+    <!-- GAME OVER -->
+    <section id="game-over" class="screen hidden">
+        <div class="panel result-panel">
+            <p class="eyebrow">MISSION FAILED</p>
+            <h1>GAME OVER</h1>
+            <p>Bạn đã sử dụng hết ba lượt sai của một ổ khóa.</p>
+            <p>Hãy thử lại hành trình giải mã từ đầu!</p>
+            <button onclick="restartGame()">PLAY AGAIN</button>
+            <button class="secondary" onclick="backToMenu()">MAIN MENU</button>
+        </div>
+    </section>
+
+    <!-- CHIẾN THẮNG -->
+    <section id="victory" class="screen hidden">
+        <div class="panel result-panel">
+            <p class="eyebrow">MISSION COMPLETED</p>
+            <h1>CONGRATULATIONS!</h1>
+            <p>Bạn đã giải mã thành công và mở được ổ khóa cuối cùng.</p>
+            <h2 id="victory-password"></h2>
+            <button onclick="restartGame()">PLAY AGAIN</button>
+            <button class="secondary" onclick="backToMenu()">MAIN MENU</button>
+        </div>
+    </section>
+
+    <script src="main.js"></script>
+</body>
+</html>
+
